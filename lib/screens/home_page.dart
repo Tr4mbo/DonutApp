@@ -1,4 +1,9 @@
+import 'package:donut_app/tab/burger_tab.dart' show BurgerTab;
+import 'package:donut_app/tab/donut_tab.dart';
+import 'package:donut_app/tab/smoothie_tab.dart';
 import 'package:flutter/material.dart';
+import '../tab/pancakes_tab.dart';
+import '../tab/pizza_tab.dart';
 import '../utils/my_tab.dart';
 
 class HomePage extends StatefulWidget {
@@ -9,6 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late TabController _tabController;
   // Código agregado: Lista de pestañas
   List<Widget> myTabs = const [
     MyTab(iconPath: 'lib/icons/donut.png', iconName: 'Donut'),
@@ -57,7 +63,18 @@ class _HomePageState extends State<HomePage> {
             // Corrección: Se pasa la lista myTabs
             TabBar(tabs: myTabs),
             
-            // Aquí iría el TabBarView o el resto de tu código...
+            //Contenido (Tabvar View)
+            Expanded(
+              child: TabBarView (
+                controller: _tabController,
+                children: [
+                  DonutTab(),
+                  BurgerTab(),
+                  SmoothieTab(),
+                  PancakesTab(),
+                  PizzaTab(),
+                ],
+              ))
           ],
         ),
       ),
