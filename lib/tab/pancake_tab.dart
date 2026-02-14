@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SmoothieTab extends StatelessWidget {
-  const SmoothieTab({super.key});
+class PancakeTab extends StatelessWidget {
+  const PancakeTab({super.key});
 
   @override
   Widget build(BuildContext context) {
