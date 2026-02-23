@@ -34,6 +34,8 @@ class DonutTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+      // CORRECCIÓN: Le decimos a Flutter cuántas donas hay exactamente
+      itemCount: donutOnSale.length, 
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2, childAspectRatio: 1 /1.4,),
         //tamaño de cada columna
@@ -53,4 +55,3 @@ class DonutTab extends StatelessWidget {
     
   }
 }
- 

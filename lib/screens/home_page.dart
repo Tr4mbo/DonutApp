@@ -76,6 +76,44 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+
+            // 4. Barra de navegación inferior (BottomNavigationBar)
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 16),
+                    // CORRECCIÓN AQUÍ: Se agregó Column para agrupar los textos
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('2 Items | \$45', 
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text(
+                          'Delyvery charges included',
+                          style: TextStyle(fontSize: 12)
+                        ),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed:() {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.pink[400],
+                    ),
+                    child: Text('View Cart', 
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
