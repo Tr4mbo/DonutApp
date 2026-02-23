@@ -5,6 +5,9 @@ import 'package:donut_app/tab/pizza_tab.dart';
 import 'package:donut_app/tab/smoothie_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:donut_app/utils/my_tab.dart';
+import 'package:provider/provider.dart';
+import 'package:donut_app/models/cart_model.dart';
+import 'package:donut_app/screens/cart_screen.dart'; 
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,7 +25,7 @@ List<Widget> myTabs = [
 ];
 
 class _HomePageState extends State<HomePage> {
-  late TabController _tabController;
+  // late TabController _tabController;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -42,10 +45,10 @@ class _HomePageState extends State<HomePage> {
         body: Column(
           children: [
             // 1. Texto principal
-            Padding(
-              padding: const EdgeInsets.only(left: 24.0),
+            const Padding(
+              padding: EdgeInsets.only(left: 24.0),
               child: Row(
-                children: const [
+                children: [
                   Text('I want to ', style: TextStyle(fontSize: 24)),
                   Text(
                     'Eat',
@@ -66,53 +69,66 @@ class _HomePageState extends State<HomePage> {
             // 3. Contenido de las pestañas (TabBarView)
             Expanded(
               child: TabBarView(
-                //controller: _tabController,
                 children: [
                   DonutTab(),
-                  PizzaTab(),
-                  PancakeTab(),
-                  SmoothieTab(),
                   BurgerTab(),
+                  SmoothieTab(),
+                  PancakeTab(),
+                  PizzaTab(),
                 ],
               ),
             ),
 
-            // 4. Barra de navegación inferior (BottomNavigationBar)
-            Container(
-              color: Colors.white,
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 16),
-                    // CORRECCIÓN AQUÍ: Se agregó Column para agrupar los textos
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('2 Items | \$45', 
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text(
-                          'Delyvery charges included',
-                          style: TextStyle(fontSize: 12)
+            // 4. Barra de navegación inferior DINÁMICA
+            Consumer<CartModel>(
+              builder: (context, cart, child) {
+                return Container(
+                  color: Colors.white,
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Aquí se muestran los items y el total real
+                            Text('${cart.totalItems} Items | \$${cart.totalPrice.toStringAsFixed(0)}', 
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                            const Text(
+                              'Delivery charges included',
+                              style: TextStyle(fontSize: 12)
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed:() {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.pink[400],
-                    ),
-                    child: Text('View Cart', 
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
                       ),
-                    ),
+                      ElevatedButton(
+                        onPressed:() {
+                          // Navegamos a la pantalla del carrito
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const CartScreen()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.pink[400],
+                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: const Text('View Cart', 
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              }
             )
           ],
         ),
